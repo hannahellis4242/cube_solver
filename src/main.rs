@@ -93,6 +93,24 @@ fn top_twist_left<'t>(c: &'t ConfigurationRef) -> ConfigurationRef<'t> {
         &c[45], &c[46], &c[47], &c[48], &c[49], &c[50], &c[11], &c[10], &c[9],
     ]
 }
+fn identity<'t>(c: &'t ConfigurationRef) -> ConfigurationRef<'t> {
+    [
+        &c[0], &c[1], &c[2], &c[3], &c[4], &c[5], &c[6], &c[7], &c[8], &c[9], &c[10], &c[11],
+        &c[12], &c[13], &c[14], &c[15], &c[16], &c[17], &c[18], &c[19], &c[20], &c[21], &c[22],
+        &c[23], &c[24], &c[25], &c[26], &c[27], &c[28], &c[29], &c[30], &c[31], &c[32], &c[33],
+        &c[34], &c[35], &c[36], &c[37], &c[38], &c[39], &c[40], &c[41], &c[42], &c[43], &c[44],
+        &c[45], &c[46], &c[47], &c[48], &c[49], &c[50], &c[51], &c[52], &c[53],
+    ]
+}
+fn front_twist_right<'t>(c: &'t ConfigurationRef) -> ConfigurationRef<'t> {
+    [
+        &c[0], &c[1], &c[2], &c[3], &c[4], &c[5], &c[29], &c[20], &c[11], &c[9], &c[10], &c[36],
+        &c[30], &c[21], &c[12], &c[6], &c[16], &c[17], &c[18], &c[19], &c[37], &c[31], &c[22],
+        &c[13], &c[7], &c[25], &c[26], &c[27], &c[28], &c[38], &c[32], &c[23], &c[14], &c[8],
+        &c[34], &c[35], &c[15], &c[24], &c[33], &c[39], &c[40], &c[41], &c[42], &c[43], &c[44],
+        &c[45], &c[46], &c[47], &c[48], &c[49], &c[50], &c[51], &c[52], &c[53],
+    ]
+}
 
 #[cfg(test)]
 mod tests {
@@ -569,6 +587,126 @@ mod tests {
             &Value::Orange, //53
         ];
         let result = top_twist_left(&config);
+        (0..54).for_each(|index| {
+            println!("{}\t{:?}->{:?}", index, *result[index], *expected[index]);
+            assert_eq!(*result[index], *expected[index])
+        });
+    }
+    #[test]
+    fn test_front_twist_right() {
+        let config: ConfigurationRef = [
+            &Value::White,
+            &Value::Blue,
+            &Value::White,
+            &Value::Yellow,
+            &Value::White,
+            &Value::White,
+            &Value::Blue,
+            &Value::Red,
+            &Value::White,
+            &Value::Orange,
+            &Value::Orange,
+            &Value::Orange,
+            &Value::Yellow,
+            &Value::White,
+            &Value::Green,
+            &Value::Red,
+            &Value::Green,
+            &Value::Orange,
+            &Value::Orange,
+            &Value::Orange,
+            &Value::Orange,
+            &Value::Green,
+            &Value::Green,
+            &Value::Yellow,
+            &Value::Red,
+            &Value::Red,
+            &Value::Green,
+            &Value::Orange,
+            &Value::Orange,
+            &Value::Yellow,
+            &Value::Blue,
+            &Value::Blue,
+            &Value::Green,
+            &Value::Red,
+            &Value::Red,
+            &Value::Yellow,
+            &Value::Red,
+            &Value::Red,
+            &Value::Blue,
+            &Value::Blue,
+            &Value::Blue,
+            &Value::Green,
+            &Value::Green,
+            &Value::White,
+            &Value::White,
+            &Value::Blue,
+            &Value::Yellow,
+            &Value::Red,
+            &Value::White,
+            &Value::Yellow,
+            &Value::Blue,
+            &Value::Yellow,
+            &Value::Yellow,
+            &Value::Green,
+        ];
+        let expected = [
+            &Value::White,  //0
+            &Value::Blue,   //1
+            &Value::White,  //2
+            &Value::Yellow, //3
+            &Value::White,  //4
+            &Value::White,  //5
+            &Value::Yellow, //6
+            &Value::Orange, //7
+            &Value::Orange, //8
+            &Value::Orange, //9
+            &Value::Orange, //10
+            &Value::Red,    //11
+            &Value::Blue,   //12
+            &Value::Green,  //13
+            &Value::Yellow, //14
+            &Value::Blue,   //15
+            &Value::Green,  //16
+            &Value::Orange, //17
+            &Value::Orange, //18
+            &Value::Orange, //19
+            &Value::Red,    //20
+            &Value::Blue,   //21
+            &Value::Green,  //22
+            &Value::White,  //23
+            &Value::Red,    //24
+            &Value::Red,    //25
+            &Value::Green,  //26
+            &Value::Orange, //27
+            &Value::Orange, //28
+            &Value::Blue,   //29
+            &Value::Green,  //30
+            &Value::Yellow, //31
+            &Value::Green,  //32
+            &Value::White,  //33
+            &Value::Red,    //34
+            &Value::Yellow, //35
+            &Value::Red,    //36
+            &Value::Red,    //37
+            &Value::Red,    //38
+            &Value::Blue,   //39
+            &Value::Blue,   //40
+            &Value::Green,  //41
+            &Value::Green,  //42
+            &Value::White,  //43
+            &Value::White,  //44
+            &Value::Blue,   //45
+            &Value::Yellow, //46
+            &Value::Red,    //47
+            &Value::White,  //48
+            &Value::Yellow, //49
+            &Value::Blue,   //50
+            &Value::Yellow, //51
+            &Value::Yellow, //52
+            &Value::Green,  //53
+        ];
+        let result = front_twist_right(&config);
         (0..54).for_each(|index| {
             println!("{}\t{:?}->{:?}", index, *result[index], *expected[index]);
             assert_eq!(*result[index], *expected[index])
