@@ -208,23 +208,43 @@ enum Operation {
     LeftBack,
 }
 
-fn operation_to_function<'t>(x:&'t Operation)->Box<fn(&'t ConfigurationRef)->ConfigurationRef<'t>>
-{
-    match x
-    {
-        Operation::Identity=>Box::new(identity),
-        Operation::TopRight=>Box::new(top_twist_right),
-        Operation::TopLeft=>Box::new(top_twist_left),
-        Operation::FrontRight=>Box::new(front_twist_right),
-        Operation::FrontLeft=>Box::new(front_twist_left),
-        Operation::RightFront=>Box::new(right_twist_front),
-        Operation::RightBack=>Box::new(right_twist_back),
-        Operation::BottomRight=>Box::new(bottom_twist_right),
-        Operation::BottomLeft=>Box::new(bottom_twist_left),
-        Operation::BackRight=>Box::new(back_twist_right),
-        Operation::BackLeft=>Box::new(back_twist_left),
-        Operation::LeftFront=>Box::new(left_twist_front),
-        Operation::LeftBack=>Box::new(left_twist_back),
+impl fmt::Debug for Operation {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Operation::Identity => write!(f, "Identity"),
+            Operation::TopRight => write!(f, "TopRight"),
+            Operation::TopLeft => write!(f, "TopLeft"),
+            Operation::FrontRight => write!(f, "FrontRight"),
+            Operation::FrontLeft => write!(f, "FrontLeft"),
+            Operation::RightFront => write!(f, "RightFront"),
+            Operation::RightBack => write!(f, "RightBack"),
+            Operation::BottomRight => write!(f, "BottomRight"),
+            Operation::BottomLeft => write!(f, "BottomLeft"),
+            Operation::BackRight => write!(f, "BackRight"),
+            Operation::BackLeft => write!(f, "BackLeft"),
+            Operation::LeftFront => write!(f, "LeftFront"),
+            Operation::LeftBack => write!(f, "LeftBack"),
+        }
+    }
+}
+
+fn operation_to_function<'t>(
+    x: &'t Operation,
+) -> Box<fn(&'t ConfigurationRef) -> ConfigurationRef<'t>> {
+    match x {
+        Operation::Identity => Box::new(identity),
+        Operation::TopRight => Box::new(top_twist_right),
+        Operation::TopLeft => Box::new(top_twist_left),
+        Operation::FrontRight => Box::new(front_twist_right),
+        Operation::FrontLeft => Box::new(front_twist_left),
+        Operation::RightFront => Box::new(right_twist_front),
+        Operation::RightBack => Box::new(right_twist_back),
+        Operation::BottomRight => Box::new(bottom_twist_right),
+        Operation::BottomLeft => Box::new(bottom_twist_left),
+        Operation::BackRight => Box::new(back_twist_right),
+        Operation::BackLeft => Box::new(back_twist_left),
+        Operation::LeftFront => Box::new(left_twist_front),
+        Operation::LeftBack => Box::new(left_twist_back),
     }
 }
 
