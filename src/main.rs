@@ -193,6 +193,7 @@ fn left_twist_back<'t>(c: &'t ConfigurationRef) -> ConfigurationRef<'t> {
 }
 
 enum Operation {
+    Identity,
     TopRight,
     TopLeft,
     FrontRight,
@@ -205,6 +206,26 @@ enum Operation {
     BackLeft,
     LeftFront,
     LeftBack,
+}
+
+fn operation_to_function<'t>(x:&'t Operation)->Box<fn(&'t ConfigurationRef)->ConfigurationRef<'t>>
+{
+    match x
+    {
+        Operation::Identity=>Box::new(identity),
+        Operation::TopRight=>Box::new(top_twist_right),
+        Operation::TopLeft=>Box::new(top_twist_left),
+        Operation::FrontRight=>Box::new(front_twist_right),
+        Operation::FrontLeft=>Box::new(front_twist_left),
+        Operation::RightFront=>Box::new(right_twist_front),
+        Operation::RightBack=>Box::new(right_twist_back),
+        Operation::BottomRight=>Box::new(bottom_twist_right),
+        Operation::BottomLeft=>Box::new(bottom_twist_left),
+        Operation::BackRight=>Box::new(back_twist_right),
+        Operation::BackLeft=>Box::new(back_twist_left),
+        Operation::LeftFront=>Box::new(left_twist_front),
+        Operation::LeftBack=>Box::new(left_twist_back),
+    }
 }
 
 #[cfg(test)]
