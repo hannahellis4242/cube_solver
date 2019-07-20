@@ -439,51 +439,37 @@ mod list {
     }
 }
 
-struct Step<'t> {
-    last: Operation,
-    config: ConfigurationRef<'t>,
+type Step<'t> = (Operation, ConfigurationRef<'t>);
+
+fn new_step<'t>(c: ConfigurationRef<'t>) -> Step<'t> {
+    (Operation::Identity, c)
 }
 
-impl<'t> Step<'t> {
-    fn new(c: ConfigurationRef<'t>) -> Step {
-        Step {
-            last: Operation::Identity,
-            config: c,
-        }
-    }
+fn solved((_, config): &Step) -> bool {
+    let master = solved_config_ref();
+    (0..54)
+        .map(|index| config[index] == master[index])
+        .fold(true, |acc, x| acc && x)
+}
 
-    fn solved(&self) -> bool {
-        let master = solved_config_ref();
-        (0..54)
-            .map(|index| self.config[index] == master[index])
-            .fold(true, |acc, x| acc && x)
-    }
-
-    fn branch(&self) -> Vec<Step> {
-        [
-            Operation::TopRight,
-            Operation::TopLeft,
-            Operation::FrontRight,
-            Operation::FrontLeft,
-            Operation::RightFront,
-            Operation::RightBack,
-            Operation::BottomRight,
-            Operation::BottomLeft,
-            Operation::BackRight,
-            Operation::BackLeft,
-            Operation::LeftFront,
-            Operation::LeftBack,
-        ]
-        .iter()
-        .map(|op| {
-            let config = operation_to_function(op)(&self.config);
-            Step {
-                last: *op,
-                config: config,
-            }
-        })
-        .collect::<Vec<_>>()
-    }
+fn branch<'t>((_, config): &'t Step<'t>) -> Vec<Step<'t>> {
+    [
+        Operation::TopRight,
+        Operation::TopLeft,
+        Operation::FrontRight,
+        Operation::FrontLeft,
+        Operation::RightFront,
+        Operation::RightBack,
+        Operation::BottomRight,
+        Operation::BottomLeft,
+        Operation::BackRight,
+        Operation::BackLeft,
+        Operation::LeftFront,
+        Operation::LeftBack,
+    ]
+    .iter()
+    .map(|op| (*op, operation_to_function(op)(&config)))
+    .collect::<Vec<Step<'t>>>()
 }
 
 #[cfg(test)]
