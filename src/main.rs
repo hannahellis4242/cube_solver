@@ -460,7 +460,7 @@ impl<'t> Step<'t> {
     }
 
     fn branch(&self) -> Vec<Step> {
-        let _xs = [
+        [
             Operation::TopRight,
             Operation::TopLeft,
             Operation::FrontRight,
@@ -481,14 +481,8 @@ impl<'t> Step<'t> {
                 last: *op,
                 config: config,
             }
-        });
-        /*.map(|(op, func)| (op, realise(&func(&to_ref(&self.config)))))
-        .map(|(op, newConfig)| Step {
-            last: *op.clone(),
-            config: newConfig,
         })
-        .collect::<Vec<_>>()*/
-        Vec::new()
+        .collect::<Vec<_>>()
     }
 }
 
